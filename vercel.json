@@ -1,0 +1,5 @@
+{
+  "buildCommand": "cd X402-Usecase/projects/X402-Usecase && npm run build",
+  "outputDirectory": "X402-Usecase/projects/X402-Usecase/dist",
+  "framework": "vite"
+}

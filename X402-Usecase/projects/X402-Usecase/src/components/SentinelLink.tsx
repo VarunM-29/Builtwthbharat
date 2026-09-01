@@ -466,7 +466,7 @@ const SentinelLink: React.FC = () => {
                 {graph.edges.map((edge, idx) => {
                   const fromNode = graph.nodes.find(n => n.id === edge.from)
                   const toNode = graph.nodes.find(n => n.id === edge.to)
-                  if (!fromNode || !toNode || fromNode.x === undefined || toNode.x === undefined) return null
+                  if (!fromNode || !toNode || fromNode.x === undefined || toNode.x === undefined || fromNode.y === undefined || toNode.y === undefined) return null
 
                   const isPath = shortestPath && 
                     ((shortestPath.indexOf(edge.from) !== -1 && shortestPath.indexOf(edge.to) !== -1) && 
