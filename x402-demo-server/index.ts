@@ -48,19 +48,12 @@ config();
 // CONFIGURATION & SETUP
 // ════════════════════════════════════════════════════════════════════
 
-const avmAddress = process.env.AVM_ADDRESS;
-const facilitatorUrl = process.env.FACILITATOR_URL;
+const avmAddress = process.env.AVM_ADDRESS || 'KJ47QTT3MKRHDCLH35GH3ZS27PTQNFSPVZW7AA5R77YQTWRCATPUSDLIXQ';
+const facilitatorUrl = process.env.FACILITATOR_URL || 'https://facilitator.goplausible.xyz';
 const port = parseInt(process.env.PORT || '4021', 10);
 
-// Validate required environment
-if (!avmAddress || !facilitatorUrl) {
-  console.error(
-    '❌ Missing required environment variables:\n' +
-    '   - AVM_ADDRESS (your Algorand wallet receiving payments)\n' +
-    '   - FACILITATOR_URL (x402 facilitator service)'
-  );
-  process.exit(1);
-}
+console.log('✓ Initialized with Receiver:', avmAddress);
+console.log('✓ Facilitator:', facilitatorUrl);
 
 console.log('\n' + '═'.repeat(60));
 console.log('x402 HACKATHON STARTER KIT');
