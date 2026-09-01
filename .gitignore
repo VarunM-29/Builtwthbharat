@@ -29,3 +29,5 @@ scratch/
 *.swp
 *.DS_Store
 Thumbs.db
+*.pptx
+*.pdf
