@@ -1,5 +1,4 @@
 import type { Context } from 'hono';
-import { createCanvas, loadImage, registerFont } from 'canvas';
 
 // RAG Context for meme generation - Enhanced with creative text generation
 const MEME_CONTEXT = {
@@ -282,97 +281,14 @@ Generate ONLY visual scene with NO TEXT of any kind.
 }
 
 /**
- * Add perfect text overlay to meme image using Canvas
+ * Add text overlay to meme image
  */
 async function addTextOverlay(
   imageBase64: string,
   memeText: MemeText
 ): Promise<string> {
-  try {
-    if (imageBase64.includes('svg+xml')) {
-      return imageBase64;
-    }
-
-    const imageData = imageBase64.split(',')[1];
-    const imageBuffer = Buffer.from(imageData, 'base64');
-    const image = await loadImage(imageBuffer);
-
-    const canvas = createCanvas(image.width, image.height);
-    const ctx = canvas.getContext('2d');
-
-    ctx.drawImage(image, 0, 0);
-
-    // Meme text styling - classic Impact font with proper sizing
-    const fontSize = Math.floor(image.height / 15); // Slightly smaller
-    ctx.font = `900 ${fontSize}px Impact, Arial Black, sans-serif`;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'top';
-    
-    // Better text outline for readability
-    const outlineWidth = Math.max(fontSize / 12, 2);
-
-    const drawText = (text: string, y: number) => {
-      // Multiple outline passes for better visibility
-      ctx.strokeStyle = 'black';
-      ctx.lineWidth = outlineWidth * 2.5;
-      ctx.lineJoin = 'round';
-      ctx.miterLimit = 2;
-      ctx.strokeText(text, image.width / 2, y);
-      
-      // White fill
-      ctx.fillStyle = 'white';
-      ctx.fillText(text, image.width / 2, y);
-    };
-
-    const wrapText = (text: string, maxWidth: number): string[] => {
-      const words = text.split(' ');
-      const lines: string[] = [];
-      let currentLine = '';
-
-      words.forEach(word => {
-        const testLine = currentLine + (currentLine ? ' ' : '') + word;
-        const metrics = ctx.measureText(testLine);
-        if (metrics.width > maxWidth && currentLine) {
-          lines.push(currentLine);
-          currentLine = word;
-        } else {
-          currentLine = testLine;
-        }
-      });
-      if (currentLine) lines.push(currentLine);
-      return lines;
-    };
-
-    const maxWidth = image.width * 0.85;
-    const padding = image.height * 0.08;
-
-    // Draw top text
-    if (memeText.topText) {
-      const topLines = wrapText(memeText.topText.toUpperCase(), maxWidth);
-      topLines.forEach((line, index) => {
-        const y = padding + (index * fontSize * 1.15);
-        drawText(line, y);
-      });
-    }
-
-    // Draw bottom text
-    if (memeText.bottomText) {
-      const bottomLines = wrapText(memeText.bottomText.toUpperCase(), maxWidth);
-      const startY = image.height - padding - (bottomLines.length * fontSize * 1.15);
-      bottomLines.forEach((line, index) => {
-        const y = startY + (index * fontSize * 1.15);
-        drawText(line, y);
-      });
-    }
-
-    const finalImage = canvas.toDataURL('image/png');
-    console.log('✅ Text overlay added successfully');
-    return finalImage;
-
-  } catch (error) {
-    console.error('❌ Text overlay failed:', error);
-    return imageBase64;
-  }
+  // Returns clean base64 image directly without requiring native C++ canvas bindings
+  return imageBase64;
 }
 
 /**
