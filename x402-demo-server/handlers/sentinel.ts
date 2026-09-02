@@ -142,7 +142,7 @@ export async function handleSentinelRequest(c: Context) {
     // Look for Phone numbers
     const phoneRegex = /(\+91[-\s]?)?[6789]\d{9}/g;
     const phonesMatched = text.match(phoneRegex) || [];
-    phonesMatched.forEach((phone, idx) => {
+    phonesMatched.forEach((phone: string, idx: number) => {
       const cleanPhone = phone.replace(/[-\s]/g, '');
       addNode(`phone_${cleanPhone}`, `${phone}`, 'phone');
     });
@@ -150,7 +150,7 @@ export async function handleSentinelRequest(c: Context) {
     // Look for Bank accounts
     const bankRegex = /[A-Z]{3,5}-\d{5,8}/g;
     const banksMatched = text.match(bankRegex) || [];
-    banksMatched.forEach(bank => {
+    banksMatched.forEach((bank: string) => {
       addNode(`bank_${bank}`, `Acc: ${bank}`, 'bank');
     });
 
