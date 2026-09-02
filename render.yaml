@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: sentinel-link-api
+    runtime: node
+    rootDir: x402-demo-server
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: AVM_ADDRESS
+        value: KJ47QTT3MKRHDCLH35GH3ZS27PTQNFSPVZW7AA5R77YQTWRCATPUSDLIXQ
+      - key: FACILITATOR_URL
+        value: https://facilitator.goplausible.xyz
