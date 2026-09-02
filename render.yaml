@@ -3,7 +3,7 @@ services:
     name: sentinel-link-api
     runtime: node
     rootDir: x402-demo-server
-    buildCommand: npm install
+    buildCommand: npm install && npm run build
     startCommand: npm start
     envVars:
       - key: AVM_ADDRESS

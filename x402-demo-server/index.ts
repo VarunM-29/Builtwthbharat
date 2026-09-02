@@ -239,20 +239,18 @@ app.notFound((c) => {
 // SERVER STARTUP
 // ════════════════════════════════════════════════════════════════════
 
-serve({ fetch: app.fetch, port }, () => {
-  console.log('\n✅ x402 Resource Server is running!\n');
-  console.log('═'.repeat(60));
-  console.log('Endpoints:');
-  console.log(`  API:     http://localhost:${port}`);
-  console.log(`  Health:  http://localhost:${port}/health`);
-  console.log(`  Info:    http://localhost:${port}/info`);
-  console.log('═'.repeat(60));
-  console.log('\n📚 QUICK COMMANDS:\n');
-  console.log('Test health endpoint (no payment):');
-  console.log(`  curl http://localhost:${port}/health\n`);
-  console.log('Test payment endpoint (will request payment):');
-  console.log(`  curl http://localhost:${port}/weather\n`);
-  console.log('See handlers/ directory for examples');
-  console.log('See endpoints.config.ts to add new endpoints');
-  console.log('\n' + '═'.repeat(60) + '\n');
-});
+import { getRequestListener } from '@hono/node-server';
+
+if (!process.env.VERCEL) {
+  serve({ fetch: app.fetch, port, hostname: '0.0.0.0' }, () => {
+    console.log('\n✅ x402 Resource Server is running!\n');
+    console.log('═'.repeat(60));
+    console.log('Endpoints:');
+    console.log(`  API:     http://0.0.0.0:${port}`);
+    console.log(`  Health:  http://0.0.0.0:${port}/health`);
+    console.log(`  Info:    http://0.0.0.0:${port}/info`);
+    console.log('═'.repeat(60));
+  });
+}
+
+export default getRequestListener(app.fetch);
